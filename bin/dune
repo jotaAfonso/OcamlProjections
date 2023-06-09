@@ -1,0 +1,17 @@
+(rule
+  (targets auto_j.ml auto_j.mli)
+  (deps    auto.atd)
+  (mode    fallback)
+  (action  (run atdgen -j %{deps})))
+
+(rule
+  (targets auto_t.ml auto_t.mli)
+  (deps    auto.atd)
+  (mode    fallback)
+  (action  (run atdgen -t %{deps})))
+
+(executable
+  (name      auto)
+  (libraries core yojson atdgen)
+  (flags     :standard -w -32)
+  (modules   auto auto_t auto_j))
