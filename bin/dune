@@ -12,6 +12,6 @@
 
 (executable
   (name      auto)
-  (libraries core yojson atdgen)
+  (libraries yojson atdgen)
   (flags     :standard -w -32)
   (modules   auto auto_t auto_j))

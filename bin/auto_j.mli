@@ -1,53 +1,106 @@
 (* Auto-generated from "auto.atd" *)
 [@@@ocaml.warning "-27-32-33-35-39"]
 
-type operation = Auto_t.operation = {
-  fromState: string;
-  toState: string;
-  operation: string;
-  participant: string;
-  newParticipant: bool;
-  bothParticipant: bool
+type operation_proj = Auto_t.operation_proj = {
+  fromS: string;
+  toS: string;
+  op_label: string
 }
 
-type association = Auto_t.association = {
-  roleID: string;
-  participants: string list
-}
-
-type auto = Auto_t.auto = {
+type proj = Auto_t.proj = {
   id: string;
-  initialState: string;
+  role: string;
+  parts: string list;
+  initialS: string;
   states: string list;
-  endStates: string list;
-  operations: operation list;
-  internalOperations: operation list;
-  roles: string list;
-  roleParticipants: association list
+  endS: string list;
+  ops: operation_proj list
 }
 
-val write_operation :
-  Bi_outbuf.t -> operation -> unit
-  (** Output a JSON value of type {!type:operation}. *)
+type operation_global = Auto_t.operation_global = {
+  fromS: string;
+  toS: string;
+  op_label: string;
+  part: string;
+  new_part: bool;
+  both_part: bool
+}
 
-val string_of_operation :
-  ?len:int -> operation -> string
-  (** Serialize a value of type {!type:operation}
+type association = Auto_t.association = { role: string; parts: string list }
+
+type global = Auto_t.global = {
+  id: string;
+  initialS: string;
+  states: string list;
+  endS: string list;
+  ops: operation_global list;
+  int_ops: operation_global list;
+  roles: string list;
+  role_part: association list
+}
+
+val write_operation_proj :
+  Buffer.t -> operation_proj -> unit
+  (** Output a JSON value of type {!type:operation_proj}. *)
+
+val string_of_operation_proj :
+  ?len:int -> operation_proj -> string
+  (** Serialize a value of type {!type:operation_proj}
       into a JSON string.
       @param len specifies the initial length
                  of the buffer used internally.
                  Default: 1024. *)
 
-val read_operation :
-  Yojson.Safe.lexer_state -> Lexing.lexbuf -> operation
-  (** Input JSON data of type {!type:operation}. *)
+val read_operation_proj :
+  Yojson.Safe.lexer_state -> Lexing.lexbuf -> operation_proj
+  (** Input JSON data of type {!type:operation_proj}. *)
 
-val operation_of_string :
-  string -> operation
-  (** Deserialize JSON data of type {!type:operation}. *)
+val operation_proj_of_string :
+  string -> operation_proj
+  (** Deserialize JSON data of type {!type:operation_proj}. *)
+
+val write_proj :
+  Buffer.t -> proj -> unit
+  (** Output a JSON value of type {!type:proj}. *)
+
+val string_of_proj :
+  ?len:int -> proj -> string
+  (** Serialize a value of type {!type:proj}
+      into a JSON string.
+      @param len specifies the initial length
+                 of the buffer used internally.
+                 Default: 1024. *)
+
+val read_proj :
+  Yojson.Safe.lexer_state -> Lexing.lexbuf -> proj
+  (** Input JSON data of type {!type:proj}. *)
+
+val proj_of_string :
+  string -> proj
+  (** Deserialize JSON data of type {!type:proj}. *)
+
+val write_operation_global :
+  Buffer.t -> operation_global -> unit
+  (** Output a JSON value of type {!type:operation_global}. *)
+
+val string_of_operation_global :
+  ?len:int -> operation_global -> string
+  (** Serialize a value of type {!type:operation_global}
+      into a JSON string.
+      @param len specifies the initial length
+                 of the buffer used internally.
+                 Default: 1024. *)
+
+val read_operation_global :
+  Yojson.Safe.lexer_state -> Lexing.lexbuf -> operation_global
+  (** Input JSON data of type {!type:operation_global}. *)
+
+val operation_global_of_string :
+  string -> operation_global
+  (** Deserialize JSON data of type {!type:operation_global}. *)
 
 val write_association :
-  Bi_outbuf.t -> association -> unit
+  Buffer.t -> association -> unit
   (** Output a JSON value of type {!type:association}. *)
 
 val string_of_association :
@@ -66,23 +119,23 @@ val association_of_string :
   string -> association
   (** Deserialize JSON data of type {!type:association}. *)
 
-val write_auto :
-  Bi_outbuf.t -> auto -> unit
-  (** Output a JSON value of type {!type:auto}. *)
+val write_global :
+  Buffer.t -> global -> unit
+  (** Output a JSON value of type {!type:global}. *)
 
-val string_of_auto :
-  ?len:int -> auto -> string
-  (** Serialize a value of type {!type:auto}
+val string_of_global :
+  ?len:int -> global -> string
+  (** Serialize a value of type {!type:global}
       into a JSON string.
       @param len specifies the initial length
                  of the buffer used internally.
                  Default: 1024. *)
 
-val read_auto :
-  Yojson.Safe.lexer_state -> Lexing.lexbuf -> auto
-  (** Input JSON data of type {!type:auto}. *)
+val read_global :
+  Yojson.Safe.lexer_state -> Lexing.lexbuf -> global
+  (** Input JSON data of type {!type:global}. *)
 
-val auto_of_string :
-  string -> auto
-  (** Deserialize JSON data of type {!type:auto}. *)
+val global_of_string :
+  string -> global
+  (** Deserialize JSON data of type {!type:global}. *)
 

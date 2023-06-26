@@ -1,9 +1,9 @@
 # dune build auto.exe
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /home/camel/Desktop/auto/projections
-# Auto-detected concurrency: 1
-$ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_d79302_output
+# Workspace root: /home/camel/Desktop/OcamlProjections
+# Auto-detected concurrency: 4
+$ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_0a9eaa_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -11,9 +11,7 @@ $ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_d79302_outp
 #  ; merlin = true
 #  ; for_host = None
 #  ; fdo_target_exe = None
-#  ; build_dir = "default"
-#  ; toplevel_path =
-#      Some External "/home/camel/.opam/cs3110-2022fa/lib/toplevel"
+#  ; build_dir = In_build_dir "default"
 #  ; ocaml_bin = External "/home/camel/.opam/cs3110-2022fa/bin"
 #  ; ocaml = Ok External "/home/camel/.opam/cs3110-2022fa/bin/ocaml"
 #  ; ocamlc = External "/home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt"
@@ -25,20 +23,19 @@ $ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_d79302_outp
 #      map
 #        { "DUNE_OCAML_HARDCODED" : "/home/camel/.opam/cs3110-2022fa/lib"
 #        ; "DUNE_OCAML_STDLIB" : "/home/camel/.opam/cs3110-2022fa/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" : "/home/camel/Desktop/auto/projections"
+#        ; "DUNE_SOURCEROOT" : "/home/camel/Desktop/OcamlProjections"
 #        ; "INSIDE_DUNE" :
-#            "/home/camel/Desktop/auto/projections/_build/default"
+#            "/home/camel/Desktop/OcamlProjections/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/camel/Desktop/auto/projections/_build/install/default/lib"
+#            "/home/camel/Desktop/OcamlProjections/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/camel/Desktop/auto/projections/_build/install/default/lib"
+#            "/home/camel/Desktop/OcamlProjections/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/camel/Desktop/auto/projections/_build/install/default/lib/toplevel"
+#            "/home/camel/Desktop/OcamlProjections/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
 #  ; findlib_paths = [ External "/home/camel/.opam/cs3110-2022fa/lib" ]
-#  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
@@ -113,6 +110,6 @@ $ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_d79302_outp
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamldep.opt -modules -impl bin/auto.ml) > _build/default/bin/.auto.eobjs/auto.ml.d
-$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -I bin/.auto.eobjs/byte -I bin/.auto.eobjs/native -I /home/camel/.opam/cs3110-2022fa/lib/atdgen -I /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime -I /home/camel/.opam/cs3110-2022fa/lib/base -I /home/camel/.opam/cs3110-2022fa/lib/base/base_internalhash_types -I /home/camel/.opam/cs3110-2022fa/lib/base/caml -I /home/camel/.opam/cs3110-2022fa/lib/base/md5 -I /home/camel/.opam/cs3110-2022fa/lib/base/shadow_stdlib -I /home/camel/.opam/cs3110-2022fa/lib/base_bigstring -I /home/camel/.opam/cs3110-2022fa/lib/base_quickcheck -I /home/camel/.opam/cs3110-2022fa/lib/base_quickcheck/ppx_quickcheck/runtime -I /home/camel/.opam/cs3110-2022fa/lib/bin_prot -I /home/camel/.opam/cs3110-2022fa/lib/bin_prot/shape -I /home/camel/.opam/cs3110-2022fa/lib/biniou -I /home/camel/.opam/cs3110-2022fa/lib/camlp-streams -I /home/camel/.opam/cs3110-2022fa/lib/core -I /home/camel/.opam/cs3110-2022fa/lib/core/base_for_tests -I /home/camel/.opam/cs3110-2022fa/lib/core/validate -I /home/camel/.opam/cs3110-2022fa/lib/easy-format -I /home/camel/.opam/cs3110-2022fa/lib/fieldslib -I /home/camel/.opam/cs3110-2022fa/lib/int_repr -I /home/camel/.opam/cs3110-2022fa/lib/jane-street-headers -I /home/camel/.opam/cs3110-2022fa/lib/parsexp -I /home/camel/.opam/cs3110-2022fa/lib/ppx_assert/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_bench/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_compare/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_enumerate/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/collector -I /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/common -I /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/config -I /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/config_types -I /home/camel/.opam/cs3110-2022fa/lib/ppx_hash/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_here/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_inline_test/config -I /home/camel/.opam/cs3110-2022fa/lib/ppx_inline_test/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/ppx_log/types -I /home/camel/.opam/cs3110-2022fa/lib/ppx_module_timer/runtime -I /home/camel/.opam/cs3110-2022fa/lib/ppx_sexp_conv/runtime-lib -I /home/camel/.opam/cs3110-2022fa/lib/sexplib -I /home/camel/.opam/cs3110-2022fa/lib/sexplib0 -I /home/camel/.opam/cs3110-2022fa/lib/splittable_random -I /home/camel/.opam/cs3110-2022fa/lib/stdio -I /home/camel/.opam/cs3110-2022fa/lib/time_now -I /home/camel/.opam/cs3110-2022fa/lib/typerep -I /home/camel/.opam/cs3110-2022fa/lib/variantslib -I /home/camel/.opam/cs3110-2022fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.auto.eobjs/native/dune__exe__Auto.cmx -c -impl bin/auto.ml)
-$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -o bin/auto.exe /home/camel/.opam/cs3110-2022fa/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/base/base_internalhash_types /home/camel/.opam/cs3110-2022fa/lib/base/caml/caml.cmxa /home/camel/.opam/cs3110-2022fa/lib/sexplib0/sexplib0.cmxa /home/camel/.opam/cs3110-2022fa/lib/base/shadow_stdlib/shadow_stdlib.cmxa /home/camel/.opam/cs3110-2022fa/lib/base/base.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/base /home/camel/.opam/cs3110-2022fa/lib/ppx_sexp_conv/runtime-lib/ppx_sexp_conv_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_compare/runtime-lib/ppx_compare_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_enumerate/runtime-lib/ppx_enumerate_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_hash/runtime-lib/ppx_hash_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_here/runtime-lib/ppx_here_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_assert/runtime-lib/ppx_assert_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_bench/runtime-lib/ppx_bench_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/base/md5/md5_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ocaml/unix.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/ocaml /home/camel/.opam/cs3110-2022fa/lib/ocaml/bigarray.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/ocaml /home/camel/.opam/cs3110-2022fa/lib/fieldslib/fieldslib.cmxa /home/camel/.opam/cs3110-2022fa/lib/variantslib/variantslib.cmxa /home/camel/.opam/cs3110-2022fa/lib/bin_prot/shape/bin_shape_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/bin_prot/bin_prot.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/bin_prot /home/camel/.opam/cs3110-2022fa/lib/ppx_inline_test/config/inline_test_config.cmxa /home/camel/.opam/cs3110-2022fa/lib/jane-street-headers/jane_street_headers.cmxa /home/camel/.opam/cs3110-2022fa/lib/time_now/time_now.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/time_now /home/camel/.opam/cs3110-2022fa/lib/ppx_inline_test/runtime-lib/ppx_inline_test_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/stdio/stdio.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_module_timer/runtime/ppx_module_timer_runtime.cmxa /home/camel/.opam/cs3110-2022fa/lib/typerep/typerep_lib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/common/expect_test_common.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/config_types/expect_test_config_types.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/collector/expect_test_collector.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/collector /home/camel/.opam/cs3110-2022fa/lib/ppx_expect/config/expect_test_config.cmxa /home/camel/.opam/cs3110-2022fa/lib/parsexp/parsexp.cmxa /home/camel/.opam/cs3110-2022fa/lib/sexplib/sexplib.cmxa /home/camel/.opam/cs3110-2022fa/lib/ppx_log/types/ppx_log_types.cmxa /home/camel/.opam/cs3110-2022fa/lib/splittable_random/splittable_random.cmxa /home/camel/.opam/cs3110-2022fa/lib/base_quickcheck/base_quickcheck.cmxa /home/camel/.opam/cs3110-2022fa/lib/base_quickcheck/ppx_quickcheck/runtime/ppx_quickcheck_runtime.cmxa /home/camel/.opam/cs3110-2022fa/lib/int_repr/int_repr.cmxa /home/camel/.opam/cs3110-2022fa/lib/base_bigstring/base_bigstring.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/base_bigstring /home/camel/.opam/cs3110-2022fa/lib/core/base_for_tests/base_for_tests.cmxa /home/camel/.opam/cs3110-2022fa/lib/core/validate/validate.cmxa /home/camel/.opam/cs3110-2022fa/lib/core/core.cmxa -I /home/camel/.opam/cs3110-2022fa/lib/core /home/camel/.opam/cs3110-2022fa/lib/easy-format/easy_format.cmxa /home/camel/.opam/cs3110-2022fa/lib/camlp-streams/camlp_streams.cmxa /home/camel/.opam/cs3110-2022fa/lib/biniou/biniou.cmxa /home/camel/.opam/cs3110-2022fa/lib/yojson/yojson.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime/atdgen_runtime.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen/atdgen.cmxa bin/.auto.eobjs/native/dune__exe.cmx bin/.auto.eobjs/native/dune__exe__Auto_t.cmx bin/.auto.eobjs/native/dune__exe__Auto_j.cmx bin/.auto.eobjs/native/dune__exe__Auto.cmx)
+$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamldep.opt -modules -impl bin/auto.ml) > _build/default/bin/.auto.eobjs/dune__exe__Auto.impl.d
+$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -I bin/.auto.eobjs/byte -I bin/.auto.eobjs/native -I /home/camel/.opam/cs3110-2022fa/lib/atdgen -I /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime -I /home/camel/.opam/cs3110-2022fa/lib/biniou -I /home/camel/.opam/cs3110-2022fa/lib/camlp-streams -I /home/camel/.opam/cs3110-2022fa/lib/easy-format -I /home/camel/.opam/cs3110-2022fa/lib/seq -I /home/camel/.opam/cs3110-2022fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.auto.eobjs/native/dune__exe__Auto.cmx -c -impl bin/auto.ml)
+$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -o bin/auto.exe /home/camel/.opam/cs3110-2022fa/lib/yojson/yojson.cmxa /home/camel/.opam/cs3110-2022fa/lib/easy-format/easy_format.cmxa /home/camel/.opam/cs3110-2022fa/lib/camlp-streams/camlp_streams.cmxa /home/camel/.opam/cs3110-2022fa/lib/biniou/biniou.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime/atdgen_runtime.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen/atdgen.cmxa bin/.auto.eobjs/native/dune__exe.cmx bin/.auto.eobjs/native/dune__exe__Auto_t.cmx bin/.auto.eobjs/native/dune__exe__Auto_j.cmx bin/.auto.eobjs/native/dune__exe__Auto.cmx)

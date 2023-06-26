@@ -1,24 +1,36 @@
 (* Auto-generated from "auto.atd" *)
 [@@@ocaml.warning "-27-32-33-35-39"]
 
-type operation = {
-  fromState: string;
-  toState: string;
-  operation: string;
-  participant: string;
-  newParticipant: bool;
-  bothParticipant: bool
+type operation_proj = { fromS: string; toS: string; op_label: string }
+
+type proj = {
+  id: string;
+  role: string;
+  parts: string list;
+  initialS: string;
+  states: string list;
+  endS: string list;
+  ops: operation_proj list
 }
 
-type association = { roleID: string; participants: string list }
+type operation_global = {
+  fromS: string;
+  toS: string;
+  op_label: string;
+  part: string;
+  new_part: bool;
+  both_part: bool
+}
 
-type auto = {
+type association = { role: string; parts: string list }
+
+type global = {
   id: string;
-  initialState: string;
+  initialS: string;
   states: string list;
-  endStates: string list;
-  operations: operation list;
-  internalOperations: operation list;
+  endS: string list;
+  ops: operation_global list;
+  int_ops: operation_global list;
   roles: string list;
-  roleParticipants: association list
+  role_part: association list
 }
