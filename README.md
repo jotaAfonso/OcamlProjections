@@ -1,5 +1,7 @@
 # OcamlProjections
 
+requires atdgen
+
 atdgen -t auto.atd
 atdgen -j auto.atd
 
