@@ -1,0 +1,4 @@
+(lang dune 3.9)
+(name projections)
+(sections (lib .) (doc ../../doc/projections))
+(files (lib (META dune-package opam)) (doc (README.md)))

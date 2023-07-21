@@ -1,17 +1,19 @@
 (rule
-  (targets auto_j.ml auto_j.mli)
-  (deps    auto.atd)
-  (mode    fallback)
-  (action  (run atdgen -j %{deps})))
+ (targets types_j.ml types_j.mli)
+ (deps types.atd)
+ (mode fallback)
+ (action
+  (run atdgen -j %{deps})))
 
 (rule
-  (targets auto_t.ml auto_t.mli)
-  (deps    auto.atd)
-  (mode    fallback)
-  (action  (run atdgen -t %{deps})))
+ (targets types_t.ml types_t.mli)
+ (deps types.atd)
+ (mode fallback)
+ (action
+  (run atdgen -t %{deps})))
 
 (executable
-  (name      auto)
-  (libraries yojson atdgen)
-  (flags     :standard -w -32)
-  (modules   auto auto_t auto_j))
+ (name auto)
+ (libraries yojson atdgen)
+ (flags :standard -w -32)
+ (modules auto types_t types_j))

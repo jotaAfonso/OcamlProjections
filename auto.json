@@ -1,80 +1,241 @@
 {
-  "id" : "c",
-  "initialState" : "S0",
-  "states" : [ "S0", "S1", "S2", "S3", "S4", "S5" ],
-  "endStates" : [ "S5" ],
-  "operations" : [ {
-    "fromState" : "_",
-    "toState" : "S0",
-    "operation" : "starts(c)",
-    "participant" : "o:O",
-    "newParticipant" : true,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S0",
-    "toState" : "S1",
-    "operation" : ".mO()",
-    "participant" : "b",
-    "newParticipant" : true,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S1",
-    "toState" : "S2",
-    "operation" : ".a()",
-    "participant" : "o",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S2",
-    "toState" : "S5",
-    "operation" : ".h()",
-    "participant" : "o",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S1",
-    "toState" : "S3",
-    "operation" : ".r()",
-    "participant" : "o",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S4",
-    "toState" : "S1",
-    "operation" : ".mO()",
-    "participant" : "b",
-    "newParticipant" : false,
-    "bothParticipant" : true
-  }, {
-    "fromState" : "S0",
-    "toState" : "S5",
-    "operation" : ".h()",
-    "participant" : "o",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  } ],
-  "internalOperations" : [ {
-    "fromState" : "S3",
-    "toState" : "S5",
-    "operation" : "~l()",
-    "participant" : "b",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  }, {
-    "fromState" : "S3",
-    "toState" : "S4",
-    "operation" : "~s()",
-    "participant" : "b",
-    "newParticipant" : false,
-    "bothParticipant" : false
-  } ],
-  "roles" : [ "B", "O" ],
-  "roleParticipants" : [
-  {
-	"roleID" : "O",
-	"participants" : [ "o" ]
-  },{
-	"roleID" : "B",
-	"participants" : [ "b" ]
-  }]
+   "id":"c",
+   "initialState":"S0",
+   "states":[
+      "S3",
+      "S4",
+      "S5",
+      "S0",
+      "S1",
+      "S2"
+   ],
+   "finalStates":[
+      "S5"
+   ],
+   "transitions":[
+      {
+         "from":"S1",
+         "to":"S2",
+         "actionLabel":"a",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "o"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S0",
+         "to":"S1",
+         "actionLabel":"makeO",
+         "newParts":[
+            {
+               "role":"B",
+               "participants":[
+                  "b"
+               ]
+            }
+         ],
+         "existantParts":{
+            "role":"",
+               "participants":[
+                  
+               ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S4",
+         "to":"S1",
+         "actionLabel":"mo",
+         "newParts":[
+            {
+               "role":"B",
+               "participants":[
+                  "b1"
+               ]
+            }
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "b"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S1",
+         "to":"S3",
+         "actionLabel":"r",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "o"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S0",
+         "to":"S5",
+         "actionLabel":"h",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "o"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S3",
+         "to":"S5",
+         "actionLabel":"h",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "o"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"_",
+         "to":"S0",
+         "actionLabel":"starts",
+         "newParts":[
+            {
+               "role":"O",
+               "participants":[
+                  "o"
+               ]
+            }
+         ],
+         "existantParts":{
+            "role":"",
+               "participants":[
+                  
+               ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"var x := 10",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S2",
+         "to":"S5",
+         "actionLabel":"h",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "b"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":false,
+         "externalCall":false
+      },
+      {
+         "from":"S3",
+         "to":"S5",
+         "actionLabel":"l",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "b"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":true,
+         "externalCall":false
+      },
+      {
+         "from":"S3",
+         "to":"S4",
+         "actionLabel":"s",
+         "newParts":[
+            
+         ],
+         "existantParts":{
+            "role":"",
+            "participants":[
+               "b"
+            ]
+         },
+         "input":"",
+         "preCondition":"",
+         "postCondition":"",
+         "internal":true,
+         "externalCall":false
+      }
+   ],
+   "roles":[
+      "B",
+      "O"
+   ],
+   "rPAssociation":[
+      {
+         "role":"O",
+         "participants":[
+            "o"
+         ]
+      },
+      {
+         "role":"B",
+         "participants":[
+            "b",
+            "b1"
+         ]
+      }
+   ]
 }

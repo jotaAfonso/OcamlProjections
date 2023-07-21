@@ -1,62 +1,133 @@
+open Types_j
+open Types_t
+open Bool
+
 let default_path = "/home/camel/Desktop/OcamlProjections/"
 let default_json = "auto.json"
 
-let epsilon = '~'  (* used for representing the empty transitions *)
+(** constant to represent empty transitions *)
+let epsilon = '~'  
 
-let is_association_of_role (role : string) (assoc : Auto_j.association) =
+(** type of fumction a participant has in a projection *)
+type type_p_func = SENDER | RECEIVER
+
+(** type of fumction a participant has in a projection *)
+type type_internal = BELONG | NBELONG
+
+(** checks if the association.role equals the role *)
+let is_association_of_role (role : string) (assoc : association) =
   String.equal assoc.role role  
 ;;
 
-let list_contains_string (part_of_label : string) (part_of_list : string) : bool =
-  String.equal part_of_label part_of_list
+(** checks if two strings are equal *)
+let is_string_equal (s1 : string) (s2 : string) : bool =
+  String.equal s1 s2
 ;;
 
-let get_label_of_operation (op_l : string) (len : int) (l_type : string) =
-  match String.get op_l 0 with 
-    '.' -> String.cat l_type (String.sub op_l 1 (len - 1));
-    | _ -> op_l
+(** print a transition list *)
+let rec print_transition_list ls = 
+  match ls with
+    [] -> ()
+    | x :: xs -> Printf.printf "%s\n" (x |> string_of_transition_proj); print_transition_list xs
 ;;
 
-let init_op_proj (op_global : Auto_t.operation_global) (label_type : string) : Auto_t.operation_proj = 
-  let l_op_label = op_global.op_label in  
-  let l_op_label_length = (String.length l_op_label) in
-  let l_op_label =  get_label_of_operation l_op_label l_op_label_length label_type in
-  
-  {
-    fromS     = op_global.fromS;
-    toS       = op_global.toS;
-    op_label  = l_op_label;
-  }
+(** print a association list *)
+let rec print_association_list ls = 
+  match ls with
+    [] -> ()
+    | x :: xs -> Printf.printf "%s\n" (x |> string_of_association); print_association_list xs
 ;;
 
-let get_ops_proj (parts : string list) (op_global : Auto_t.operation_global) : Auto_t.operation_proj =
-  match List.exists (list_contains_string op_global.part) parts  with
+(** builds and returns the action label of a transition *)
+let get_action_label (proj : transition_proj) p_ftype is_starter = 
+    match (p_ftype,is_starter) with
+    (SENDER, true) -> 
+      { proj with action = "getContract()" }
+    | (SENDER, false) -> 
+      { proj with action = String.cat "!" proj.action }
+    | (RECEIVER, true) -> 
+      { proj with action = "findContract()" }
+    | (RECEIVER, false) -> 
+      { proj with action = String.cat "?" proj.action }
+;;
+
+(** makes a transitions for the projection *)
+let make_transtion_proj (t : transition_global) p_ftype : transition_proj = 
+  let proj : transition_proj = { fromS = t.fromS; toS = t.toS; action = t.action; } in
+  match t.fromS with
+    "_" -> 
+      get_action_label proj p_ftype true
+    | _ ->
+      get_action_label proj p_ftype false      
+;;
+
+(** Checks if a participant is in the association between role and participants.
+  @author JAfonso  
+  @param part - participant
+  @param a - association between role and participants
+*)
+let is_part_in_association part (a : association) =
+  List.exists (is_string_equal part) a.parts
+;;
+
+(** Checks if a participant it can call the transition. 
+  It does this by checking if it is present in either the new parts or existent ones.
+  @author JAfonso  
+  @param t - transition
+  @param part - participant
+*)
+let is_participant_in_transition (t : transition_global) part = 
+  (||) (List.mem part t.exi_p.parts) (List.exists (is_part_in_association part) t.new_p)
+;;
+
+(** Treats a transition from a global type to a transition of a projection.
+  @author JAfonso  
+  @param t - transition global type
+  @param part - participants of a specific type
+*)
+let get_transitions_proj (part : string list) (t : transition_global) =
+  match (List.exists (is_participant_in_transition t) part) with
     true -> 
-      init_op_proj op_global "!"
-    | false ->
-      init_op_proj op_global "?"
+      make_transtion_proj t SENDER
+    | false -> 
+      make_transtion_proj t RECEIVER
+;;
+
+(** Treats an internal transition from a global type to a transition of a projection.
+  @author JAfonso  
+  @param t - transition global type
+  @param part - participants of a specific type
+*)
+let get_internal_transitions_proj (part : string list) (t : transition_global) =
+  match (List.exists (is_participant_in_transition t) part) with
+    true -> 
+      (BELONG, (make_transtion_proj t SENDER))
+    | false -> 
+      (NBELONG, (make_transtion_proj t RECEIVER))
 ;;
 
 let transitionGet3 trns = List.map ( fun (_,c) -> c ) trns
 
-
-let get_transitions_from_v2 (ops : Auto_t.operation_proj list) (toState : string) =
-  List.filter (fun (x:Auto_t.operation_proj) -> String.equal x.fromS toState) ops
+let filter_disjoint_elements_from_list l ls =
+  List.filter (fun x -> not (List.mem x l)) ls 
 ;;
 
-let epsilon_closure (ops : Auto_t.operation_proj list) (endStates : string list) (op_int_global : Auto_t.operation_global) = 
-  let new_transitions_to = get_transitions_from_v2 ops op_int_global.toS in 
-    
-  let is_state_end_state = List.exists (fun (x:string) -> String.equal x op_int_global.toS) endStates in
+let get_transitions_from_v2 (ops : transition_proj list) (toState : string) =
+  List.filter (fun (x : transition_proj) -> String.equal x.fromS toState) ops
+;;
 
-  let duplicated_transitions = List.map (fun (x:Auto_t.operation_proj) -> {x with fromS = op_int_global.fromS}) new_transitions_to in
+let epsilon_closure (transitions_p : transition_proj list) (finalS : string list) (transition_i : transition_proj) = 
+
+  let new_transitions_to = get_transitions_from_v2 transitions_p transition_i.toS in 
+  let is_state_end_state = List.exists (fun (x : string) -> String.equal x transition_i.toS) finalS in
+  let duplicated_transitions = List.map (fun (x : transition_proj) -> {x with fromS = transition_i.fromS}) new_transitions_to in
 
   match is_state_end_state with 
-    true -> (duplicated_transitions, [op_int_global.fromS])
+    true -> (duplicated_transitions, [transition_i.fromS])
     |false -> (duplicated_transitions, [])
 ;;
 
-
+(** Returns reachable a string of reachable states from s*)
 let reachable (s : string) (transitions: (string * string) list) =
 			
   let neighbourSts st t = transitionGet3 (List.filter (fun (a,_) -> a = st) t) in
@@ -67,108 +138,134 @@ let reachable (s : string) (transitions: (string * string) list) =
     if visited = s then [] 
     else s @ ( reach s (nextStates s t) (remain s t) ) in
   
-  reach [] (List.sort_uniq compare [s]) transitions
-
-
-let get_ops_int_proj (parts : string list) (op_int_global : Auto_t.operation_global) =
-  match List.exists (list_contains_string op_int_global.part) parts  with
-    true -> 
-      (op_int_global, true)
-    | false ->
-      (op_int_global, false)
+  reach [] (List.sort_uniq String.compare [s]) transitions
 ;;
 
-let is_not_empty (l : string list) : bool =
+(** Indicates if a list is empty or not.
+  @author JAfonso   
+*)
+let is_list_empty (l : string list) : bool =
 match l with  
-  [] -> false
-  | _ -> true
+  [] -> true
+  | _ -> false
 
-let proj_by_role (global : Auto_j.global) (role : string) =
-  Printf.printf "Projection of role %s\n" role;
+(** Restrives all normal transitions from the global type provided.
+  @author JAfonso
+  @param global - global type
+*)
+let get_normal_transitions_from_global (global : global) =
+  List.filter (fun (x : transition_global) -> not x.internal ) global.transitions
+;;
 
-  (* gets participants of type <role> *)
-  let l_part = (List.find (is_association_of_role role) global.role_part).parts in
+(** Restrives all internal transitions from the global type provided.
+  @author JAfonso
+  @param global - global type
+*)
+let get_internal_transitions_from_global (global : global) =
+  List.filter (fun (x : transition_global) -> x.internal ) global.transitions
+;;
+
+(** Filters internal transitions by analysing the first element of a tuple, 
+  that states if the internal transition belongs to the current role,
+  and also a flag that indicates if we want the states that belong or otherwise.
+  Uses XNOR / XAND to make the comparision. 
+  @author JAfonso
+  @param flag - possession flag
+  @param x - possession of transition
+*)
+let filter_internal_transition flag (x, _) =
+  match x with 
+    BELONG -> not (true <> flag)
+    | NBELONG -> not (false <> flag)
+;;
+
+(** Generates a projection of the type role from the global type.
+  @author JAfonso
+  @param global - global type
+  @param role - role of the projection
+*)
+let proj_by_role (global : global) stats_flag role =  
+  (* gets all participants of type <role> *)
+  let proj_participants = (List.find (is_association_of_role role) global.role_part).parts in
   
-  (* gets external operations of the projection of the type <role> *)
-  let l_ops_proj = List.map (get_ops_proj l_part) global.ops in
+  (* gets transitions of the projection of the type <role>, only treats normal transitions *)
+  let transitions = List.map (get_transitions_proj proj_participants) (get_normal_transitions_from_global global) in
+  
+  (* gets internal transitions in a tuple to identify if they belong to a participant of type <role> *)
+  let internal_transitions = List.map (get_internal_transitions_proj proj_participants) (get_internal_transitions_from_global global) in
+  
+  (* gets internal transitions that belong to participants of type <role> *)
+  let int_belong = List.map (fun (_,y) -> y ) (List.filter (filter_internal_transition true) internal_transitions) in
 
-  (* labels internal operations if they are called from a participant of type <role> *)
-  let l_ops_int_proj = List.map (get_ops_int_proj l_part) global.int_ops in
-
-  (* filters by internal operations that belong to the projection of the type <role> *)
-  let ops_int_belong = List.map (fun (z,_) -> z ) (List.filter (fun (_,y) -> Bool.equal y true) l_ops_int_proj) in
-
-  (* gets internal operations that belong to the projection of the type <role> *)
-  let l_ops_int_belong = List.map (get_ops_proj l_part) ops_int_belong in
-
-  (* filters by internal operations that do not belong to the projection of the type <role> *)
-  let ops_int_not_belong = List.map (fun (z,_) -> z ) (List.filter (fun (_,y) -> Bool.equal y false) l_ops_int_proj) in
-
+  (* gets internal transitions that do not belong to participants of type <role> *)
+  let int_nbelong = List.map (fun (_,y) -> y ) (List.filter (filter_internal_transition false) internal_transitions) in
+  
   (* treats internal operations that do not belong to the projection of the type <role> *)
-  let l_ops_int_not_belong = (List.map (epsilon_closure l_ops_proj global.endS) ops_int_not_belong) in
-
-  let l_new_end_states = List.concat (List.map (fun (_,z) -> z ) (List.filter (fun (_,y) -> is_not_empty y) l_ops_int_not_belong)) in
+  let l_ops_int_not_belong = (List.map (epsilon_closure transitions global.endS) int_nbelong) in
+  
+  (* new transitions, generated from the internal transitions that do not belong in this projection*)
+  let new_end_states = List.concat (List.map (fun (_,z) -> z ) (List.filter (fun (_,y) -> not (is_list_empty y)) l_ops_int_not_belong)) in
 
   (* clean up when internal operations do not belong to the role type *)
-  let l_new_ops_int_not_belong = List.concat (List.map (fun (z,_) -> z ) l_ops_int_not_belong) in
+  let new_internal_transitions = List.concat (List.map (fun (z,_) -> z ) l_ops_int_not_belong) in
+
+   (* removing loops
+  let l_ops_proj_filtered =
+    List.filter (fun (x : transition_proj) -> Bool.(&&) (String.equal x.toS x.fromS) (String.equal "?" (String.sub x.action 0 1)))  transitions in
+    *)
+
+  (* gets edges of transitions *)
+   let init_to_end_ops = List.map (fun (x: transition_proj) -> (x.fromS, x.toS)) (List.append (List.append transitions int_belong) new_internal_transitions) in
   
-  (*  
-  let rec t_print ls = match ls with
-    [] -> ()
-    | x :: xs -> Printf.printf "%s\n" (x |> Auto_j.string_of_operation_proj); t_print xs in
-  
-  t_print l_new_ops_int_not_belong;
-  *)
-  
-  let init_to_end_ops = List.map (fun (x: Auto_t.operation_proj) -> (x.fromS, x.toS)) (List.append (List.append l_ops_proj l_ops_int_belong) l_new_ops_int_not_belong) in
+  (* gets reachable states *)
   let reachable_states = reachable global.initialS init_to_end_ops in
 
   (* remove duplicates *)
   let cons_uniq xs x = if List.mem x xs then xs else x :: xs in
   let remove_from_left xs = List.rev (List.fold_left cons_uniq [] xs) in
 
-  let l_states = remove_from_left reachable_states in
-  (* TODO: function *)
-  let useless_states = List.filter (fun x -> not (List.mem x l_states)) global.states in
-
-  let result_endS = List.filter (fun x -> not (List.mem x l_states)) (List.append global.endS l_new_end_states) in
+  (* removes useless states from all states in the automaton *)
+  let r_states = remove_from_left reachable_states in
+  let useless_states = filter_disjoint_elements_from_list r_states global.states in
+  (* filter_disjoint_elements_from_list r_states *)
+  let result_endS = (List.append global.endS new_end_states) in
 
   let result_ops = List.filter 
-    (fun (x : Auto_t.operation_proj) -> 
-      Bool.(&&) (not (List.mem x.toS useless_states)) (not (List.mem x.toS useless_states)) ) 
-        (List.append (List.append l_ops_proj l_ops_int_belong) l_new_ops_int_not_belong) in
+    (fun (x : transition_proj) -> 
+      Bool.(&&) (not (List.mem x.fromS useless_states)) (not (List.mem x.toS useless_states)) ) 
+        (List.append (List.append transitions int_belong) new_internal_transitions) in
 
-  Printf.printf "useless States: %s\n" (String.concat ", " useless_states);
-  Printf.printf "reachable States: %s\n" (String.concat ", " l_states);
-  Printf.printf "\n"; 
-
-  let proj : Auto_t.proj = 
+  let proj : proj = 
   {
     id = global.id;
     role = role;
-    parts = l_part;
+    parts = proj_participants;
     initialS = global.initialS;
-    states = l_states;
+    states = r_states;
     endS = result_endS;
-    ops = result_ops;
+    transitions = remove_from_left result_ops;
   } in
 
-  let string_file = Auto_j.string_of_proj proj in 
-  Printf.printf "%s\n" string_file;
-  Printf.printf "\n"; 
-  
-    Atdgen_runtime.Util.Json.to_file Auto_j.write_proj (String.cat default_path (String.cat role "_proj.json")) proj
-  
+  if stats_flag then
+    let string_file = string_of_proj proj in 
+    Printf.printf "Projection of role %s\n" role;
+    Printf.printf "%s\n" (Yojson.Safe.prettify string_file);  
 ;;
 
-let main_function path =  
-  let global = Atdgen_runtime.Util.Json.from_file Auto_j.read_global path in
-  List.iter (proj_by_role global) global.roles;
+(** Reads from json file <path> and then generates the respective projections 
+  for each role
+  @author JAfonso
+  @param path - json input file path
+  @param stats_flag - flag to indicate if it shows stats of generated projections
+ *)
+let main_function path stats_flag =  
+  let global_t = Atdgen_runtime.Util.Json.from_file read_global path in
+  List.iter (proj_by_role global_t stats_flag) global_t.roles;
 ;;
 
+(** Main function *)
 let () =
-  (*Printf.printf "Global Type to Projections\n";*)
-  if (Array.length (Sys.argv)) = 2 then
-    main_function (Sys.argv).(1)
+  if (Array.length (Sys.argv)) = 3 then
+    main_function (Sys.argv).(1) true
   else
-    main_function (String.cat default_path default_json)
+    main_function (String.cat default_path default_json) true
