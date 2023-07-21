@@ -1,5 +1,7 @@
 # OcamlProjections
 
+This project is complementary to [JavaParser], where taking the generated file from that project gives us the correct projections of the automaton for every role type that exists in it.
+
 ## Install
 - ocaml
 - atdgen
@@ -26,4 +28,8 @@ To run:
 cd ../_build/default/bin
 ./auto.exe  <input_file.json>
 ```
-![Screenshot from 2023-06-09 07-06-40](https://github.com/jotaAfonso/OcamlProjections/assets/49497176/e5e3b111-c2bf-4d5d-9f02-1b316b094be0)
+
+### Example of generated projections:
+![project](https://github.com/jotaAfonso/OcamlProjections/assets/49497176/e1ca257e-c1dd-425b-9a8c-0ae85145a00c)
+
+[JavaParser]: https://github.com/jotaAfonso/Parser
