@@ -1,0 +1,74 @@
+{
+  "id": "c",
+  "role": "O",
+  "participants": [ "o" ],
+  "initialState": "S0",
+  "states": [ "S0", "S1", "S5", "S2", "S3" ],
+  "finalStates": [ "S5", "S3" ],
+  "transitions": [
+    {
+      "from": "S1",
+      "to": "S2",
+      "actionLabel": "!a",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "S0",
+      "to": "S1",
+      "actionLabel": "?makeO",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "S1",
+      "to": "S3",
+      "actionLabel": "!r",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "S0",
+      "to": "S5",
+      "actionLabel": "!h",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "S3",
+      "to": "S5",
+      "actionLabel": "!h",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "_",
+      "to": "S0",
+      "actionLabel": "getContract()",
+      "input": "",
+      "preCondition": "",
+      "postCondition": "var x := 10"
+    },
+    {
+      "from": "S2",
+      "to": "S5",
+      "actionLabel": "?h",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    },
+    {
+      "from": "S3",
+      "to": "S1",
+      "actionLabel": "?mo",
+      "input": "",
+      "preCondition": "",
+      "postCondition": ""
+    }
+  ]
+}

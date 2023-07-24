@@ -30,6 +30,9 @@ type transition_proj = {
 	fromS 		<json name="from"> 			: string;
 	toS 		<json name="to"> 			: string;
 	action 		<json name="actionLabel">		: string;
+	inputP		<json name="input"> 			: string;
+	preC 		<json name="preCondition"> 		: string;
+	postC 		<json name="postCondition"> 		: string;
 
 }
 

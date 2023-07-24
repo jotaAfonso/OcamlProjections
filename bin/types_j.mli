@@ -4,7 +4,10 @@
 type transition_proj = Types_t.transition_proj = {
   fromS: string;
   toS: string;
-  action: string
+  action: string;
+  inputP: string;
+  preC: string;
+  postC: string
 }
 
 type association = Types_t.association = { role: string; parts: string list }

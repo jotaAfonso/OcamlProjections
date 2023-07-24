@@ -1,7 +1,14 @@
 (* Auto-generated from "types.atd" *)
 [@@@ocaml.warning "-27-32-33-35-39"]
 
-type transition_proj = { fromS: string; toS: string; action: string }
+type transition_proj = {
+  fromS: string;
+  toS: string;
+  action: string;
+  inputP: string;
+  preC: string;
+  postC: string
+}
 
 type association = { role: string; parts: string list }
 

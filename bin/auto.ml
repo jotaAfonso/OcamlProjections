@@ -53,7 +53,7 @@ let get_action_label (proj : transition_proj) p_ftype is_starter =
 
 (** makes a transitions for the projection *)
 let make_transtion_proj (t : transition_global) p_ftype : transition_proj = 
-  let proj : transition_proj = { fromS = t.fromS; toS = t.toS; action = t.action; } in
+  let proj : transition_proj = { fromS = t.fromS; toS = t.toS; action = t.action; inputP = t.input; preC = t.preC; postC = t.postC; } in
   match t.fromS with
     "_" -> 
       get_action_label proj p_ftype true
@@ -250,6 +250,10 @@ let proj_by_role (global : global) stats_flag role =
     let string_file = string_of_proj proj in 
     Printf.printf "Projection of role %s\n" role;
     Printf.printf "%s\n" (Yojson.Safe.prettify string_file);  
+
+  let oc = open_out (String.cat role "_proj.json") in
+  Printf.fprintf oc "%s\n" (Yojson.Safe.prettify string_file);
+
 ;;
 
 (** Reads from json file <path> and then generates the respective projections 

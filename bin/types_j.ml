@@ -4,7 +4,10 @@
 type transition_proj = Types_t.transition_proj = {
   fromS: string;
   toS: string;
-  action: string
+  action: string;
+  inputP: string;
+  preC: string;
+  postC: string
 }
 
 type association = Types_t.association = { role: string; parts: string list }
@@ -73,6 +76,33 @@ let write_transition_proj : _ -> transition_proj -> _ = (
       Yojson.Safe.write_string
     )
       ob x.action;
+    if !is_first then
+      is_first := false
+    else
+      Buffer.add_char ob ',';
+      Buffer.add_string ob "\"input\":";
+    (
+      Yojson.Safe.write_string
+    )
+      ob x.inputP;
+    if !is_first then
+      is_first := false
+    else
+      Buffer.add_char ob ',';
+      Buffer.add_string ob "\"preCondition\":";
+    (
+      Yojson.Safe.write_string
+    )
+      ob x.preC;
+    if !is_first then
+      is_first := false
+    else
+      Buffer.add_char ob ',';
+      Buffer.add_string ob "\"postCondition\":";
+    (
+      Yojson.Safe.write_string
+    )
+      ob x.postC;
     Buffer.add_char ob '}';
 )
 let string_of_transition_proj ?(len = 1024) x =
@@ -86,6 +116,9 @@ let read_transition_proj = (
     let field_fromS = ref (None) in
     let field_toS = ref (None) in
     let field_action = ref (None) in
+    let field_inputP = ref (None) in
+    let field_preC = ref (None) in
+    let field_postC = ref (None) in
     try
       Yojson.Safe.read_space p lb;
       Yojson.Safe.read_object_end lb;
@@ -111,9 +144,33 @@ let read_transition_proj = (
                   -1
                 )
               )
+            | 5 -> (
+                if String.unsafe_get s pos = 'i' && String.unsafe_get s (pos+1) = 'n' && String.unsafe_get s (pos+2) = 'p' && String.unsafe_get s (pos+3) = 'u' && String.unsafe_get s (pos+4) = 't' then (
+                  3
+                )
+                else (
+                  -1
+                )
+              )
             | 11 -> (
                 if String.unsafe_get s pos = 'a' && String.unsafe_get s (pos+1) = 'c' && String.unsafe_get s (pos+2) = 't' && String.unsafe_get s (pos+3) = 'i' && String.unsafe_get s (pos+4) = 'o' && String.unsafe_get s (pos+5) = 'n' && String.unsafe_get s (pos+6) = 'L' && String.unsafe_get s (pos+7) = 'a' && String.unsafe_get s (pos+8) = 'b' && String.unsafe_get s (pos+9) = 'e' && String.unsafe_get s (pos+10) = 'l' then (
                   2
+                )
+                else (
+                  -1
+                )
+              )
+            | 12 -> (
+                if String.unsafe_get s pos = 'p' && String.unsafe_get s (pos+1) = 'r' && String.unsafe_get s (pos+2) = 'e' && String.unsafe_get s (pos+3) = 'C' && String.unsafe_get s (pos+4) = 'o' && String.unsafe_get s (pos+5) = 'n' && String.unsafe_get s (pos+6) = 'd' && String.unsafe_get s (pos+7) = 'i' && String.unsafe_get s (pos+8) = 't' && String.unsafe_get s (pos+9) = 'i' && String.unsafe_get s (pos+10) = 'o' && String.unsafe_get s (pos+11) = 'n' then (
+                  4
+                )
+                else (
+                  -1
+                )
+              )
+            | 13 -> (
+                if String.unsafe_get s pos = 'p' && String.unsafe_get s (pos+1) = 'o' && String.unsafe_get s (pos+2) = 's' && String.unsafe_get s (pos+3) = 't' && String.unsafe_get s (pos+4) = 'C' && String.unsafe_get s (pos+5) = 'o' && String.unsafe_get s (pos+6) = 'n' && String.unsafe_get s (pos+7) = 'd' && String.unsafe_get s (pos+8) = 'i' && String.unsafe_get s (pos+9) = 't' && String.unsafe_get s (pos+10) = 'i' && String.unsafe_get s (pos+11) = 'o' && String.unsafe_get s (pos+12) = 'n' then (
+                  5
                 )
                 else (
                   -1
@@ -151,6 +208,30 @@ let read_transition_proj = (
                 ) p lb
               )
             );
+          | 3 ->
+            field_inputP := (
+              Some (
+                (
+                  Atdgen_runtime.Oj_run.read_string
+                ) p lb
+              )
+            );
+          | 4 ->
+            field_preC := (
+              Some (
+                (
+                  Atdgen_runtime.Oj_run.read_string
+                ) p lb
+              )
+            );
+          | 5 ->
+            field_postC := (
+              Some (
+                (
+                  Atdgen_runtime.Oj_run.read_string
+                ) p lb
+              )
+            );
           | _ -> (
               Yojson.Safe.skip_json p lb
             )
@@ -180,9 +261,33 @@ let read_transition_proj = (
                     -1
                   )
                 )
+              | 5 -> (
+                  if String.unsafe_get s pos = 'i' && String.unsafe_get s (pos+1) = 'n' && String.unsafe_get s (pos+2) = 'p' && String.unsafe_get s (pos+3) = 'u' && String.unsafe_get s (pos+4) = 't' then (
+                    3
+                  )
+                  else (
+                    -1
+                  )
+                )
               | 11 -> (
                   if String.unsafe_get s pos = 'a' && String.unsafe_get s (pos+1) = 'c' && String.unsafe_get s (pos+2) = 't' && String.unsafe_get s (pos+3) = 'i' && String.unsafe_get s (pos+4) = 'o' && String.unsafe_get s (pos+5) = 'n' && String.unsafe_get s (pos+6) = 'L' && String.unsafe_get s (pos+7) = 'a' && String.unsafe_get s (pos+8) = 'b' && String.unsafe_get s (pos+9) = 'e' && String.unsafe_get s (pos+10) = 'l' then (
                     2
+                  )
+                  else (
+                    -1
+                  )
+                )
+              | 12 -> (
+                  if String.unsafe_get s pos = 'p' && String.unsafe_get s (pos+1) = 'r' && String.unsafe_get s (pos+2) = 'e' && String.unsafe_get s (pos+3) = 'C' && String.unsafe_get s (pos+4) = 'o' && String.unsafe_get s (pos+5) = 'n' && String.unsafe_get s (pos+6) = 'd' && String.unsafe_get s (pos+7) = 'i' && String.unsafe_get s (pos+8) = 't' && String.unsafe_get s (pos+9) = 'i' && String.unsafe_get s (pos+10) = 'o' && String.unsafe_get s (pos+11) = 'n' then (
+                    4
+                  )
+                  else (
+                    -1
+                  )
+                )
+              | 13 -> (
+                  if String.unsafe_get s pos = 'p' && String.unsafe_get s (pos+1) = 'o' && String.unsafe_get s (pos+2) = 's' && String.unsafe_get s (pos+3) = 't' && String.unsafe_get s (pos+4) = 'C' && String.unsafe_get s (pos+5) = 'o' && String.unsafe_get s (pos+6) = 'n' && String.unsafe_get s (pos+7) = 'd' && String.unsafe_get s (pos+8) = 'i' && String.unsafe_get s (pos+9) = 't' && String.unsafe_get s (pos+10) = 'i' && String.unsafe_get s (pos+11) = 'o' && String.unsafe_get s (pos+12) = 'n' then (
+                    5
                   )
                   else (
                     -1
@@ -220,6 +325,30 @@ let read_transition_proj = (
                   ) p lb
                 )
               );
+            | 3 ->
+              field_inputP := (
+                Some (
+                  (
+                    Atdgen_runtime.Oj_run.read_string
+                  ) p lb
+                )
+              );
+            | 4 ->
+              field_preC := (
+                Some (
+                  (
+                    Atdgen_runtime.Oj_run.read_string
+                  ) p lb
+                )
+              );
+            | 5 ->
+              field_postC := (
+                Some (
+                  (
+                    Atdgen_runtime.Oj_run.read_string
+                  ) p lb
+                )
+              );
             | _ -> (
                 Yojson.Safe.skip_json p lb
               )
@@ -232,6 +361,9 @@ let read_transition_proj = (
             fromS = (match !field_fromS with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "fromS");
             toS = (match !field_toS with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "toS");
             action = (match !field_action with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "action");
+            inputP = (match !field_inputP with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "inputP");
+            preC = (match !field_preC with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "preC");
+            postC = (match !field_postC with Some x -> x | None -> Atdgen_runtime.Oj_run.missing_field p "postC");
           }
          : transition_proj)
       )
