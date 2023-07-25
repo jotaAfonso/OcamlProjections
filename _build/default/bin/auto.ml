@@ -184,7 +184,7 @@ let filter_internal_transition flag (x, _) =
   @param global - global type
   @param role - role of the projection
 *)
-let proj_by_role (global : global) stats_flag role =  
+let proj_by_role (global : global) output_file stats_flag role =  
   (* gets all participants of type <role> *)
   let proj_participants = (List.find (is_association_of_role role) global.role_part).parts in
   
@@ -246,12 +246,14 @@ let proj_by_role (global : global) stats_flag role =
     transitions = remove_from_left result_ops;
   } in
 
+  Printf.printf "%s\n" (String.cat "" (String.cat role ".json"));
+
   if stats_flag then
     let string_file = string_of_proj proj in 
     Printf.printf "Projection of role %s\n" role;
     Printf.printf "%s\n" (Yojson.Safe.prettify string_file);  
 
-  let oc = open_out (String.cat role "_proj.json") in
+  let oc = open_out (String.cat output_file (String.cat role ".json")) in
   Printf.fprintf oc "%s\n" (Yojson.Safe.prettify string_file);
 
 ;;
@@ -262,14 +264,24 @@ let proj_by_role (global : global) stats_flag role =
   @param path - json input file path
   @param stats_flag - flag to indicate if it shows stats of generated projections
  *)
-let main_function path stats_flag =  
-  let global_t = Atdgen_runtime.Util.Json.from_file read_global path in
-  List.iter (proj_by_role global_t stats_flag) global_t.roles;
+let main_function input_path output_path stats_flag =  
+  let global_t = Atdgen_runtime.Util.Json.from_file read_global input_path in
+  List.iter (proj_by_role global_t output_path stats_flag) global_t.roles;
 ;;
+
+let usage_msg = "-i <inputFile> -o <outputFile>"
+
+let output_file = ref "_proj.json"
+
+let input_file = ref ""
+
+let anon_fun filename =
+  input_file := filename
+
+  let speclist =
+  [("-o", Arg.Set_string output_file, "Set output file name.")]
 
 (** Main function *)
 let () =
-  if (Array.length (Sys.argv)) = 3 then
-    main_function (Sys.argv).(1) true
-  else
-    main_function (String.cat default_path default_json) true
+  Arg.parse speclist anon_fun usage_msg;
+  main_function !input_file !output_file true

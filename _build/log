@@ -3,7 +3,7 @@
 # Shared cache: disabled
 # Workspace root: /home/camel/Desktop/git_project/OcamlProjections
 # Auto-detected concurrency: 2
-$ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_8af6a3_output
+$ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_b0a96c_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -111,4 +111,6 @@ $ /home/camel/.opam/cs3110-2022fa/bin/ocamlc.opt -config > /tmp/dune_8af6a3_outp
 #      ; windows_unicode = false
 #      }
 #  }
+$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamldep.opt -modules -impl bin/auto.ml) > _build/default/bin/.auto.eobjs/dune__exe__Auto.impl.d
+$ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -I bin/.auto.eobjs/byte -I bin/.auto.eobjs/native -I /home/camel/.opam/cs3110-2022fa/lib/atdgen -I /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime -I /home/camel/.opam/cs3110-2022fa/lib/biniou -I /home/camel/.opam/cs3110-2022fa/lib/camlp-streams -I /home/camel/.opam/cs3110-2022fa/lib/easy-format -I /home/camel/.opam/cs3110-2022fa/lib/seq -I /home/camel/.opam/cs3110-2022fa/lib/yojson -intf-suffix .ml -no-alias-deps -opaque -open Dune__exe -o bin/.auto.eobjs/native/dune__exe__Auto.cmx -c -impl bin/auto.ml)
 $ (cd _build/default && /home/camel/.opam/cs3110-2022fa/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -32 -g -o bin/auto.exe /home/camel/.opam/cs3110-2022fa/lib/yojson/yojson.cmxa /home/camel/.opam/cs3110-2022fa/lib/easy-format/easy_format.cmxa /home/camel/.opam/cs3110-2022fa/lib/camlp-streams/camlp_streams.cmxa /home/camel/.opam/cs3110-2022fa/lib/biniou/biniou.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen-runtime/atdgen_runtime.cmxa /home/camel/.opam/cs3110-2022fa/lib/atdgen/atdgen.cmxa bin/.auto.eobjs/native/dune__exe.cmx bin/.auto.eobjs/native/dune__exe__Types_t.cmx bin/.auto.eobjs/native/dune__exe__Types_j.cmx bin/.auto.eobjs/native/dune__exe__Auto.cmx)
